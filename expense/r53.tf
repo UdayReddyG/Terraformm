@@ -4,5 +4,6 @@ resource "aws_route53_record" "expense" {
   name    = var.domain_names[count.index]
   type    = "A"
   ttl     = 60
-  records = [aws_instance.expense[count.index].private_ip]
+  records = var.instance_names=="frontend"?[aws_instance.expense[count.index].public_ip]:[aws_instance.expense[count.index].private_ip]
+  allow_overwrite= true
 }
